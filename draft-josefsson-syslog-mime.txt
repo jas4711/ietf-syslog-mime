@@ -1,0 +1,224 @@
+
+
+
+Network Working Group                                       S. Josefsson
+Internet-Draft                                                    SJD AB
+Intended status: Standards Track                       November 11, 2010
+Expires: May 15, 2011
+
+
+              The application/syslog Media Type for Syslog
+                     draft-josefsson-syslog-mime-00
+
+Abstract
+
+   The syslog protocol is used to convey event notification messages
+   across the network.  This document specify a stored format for Syslog
+   information.
+
+Status of this Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on May 15, 2011.
+
+Copyright Notice
+
+   Copyright (c) 2010 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+Josefsson                 Expires May 15, 2011                  [Page 1]
+
+Internet-Draft              Syslog Media Type              November 2010
+
+
+Table of Contents
+
+   1.  Introduction and Background . . . . . . . . . . . . . . . . . . 3
+   2.  Syslog Format . . . . . . . . . . . . . . . . . . . . . . . . . 3
+   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . . . 3
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . . . 4
+   5.  Normative References  . . . . . . . . . . . . . . . . . . . . . 4
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Josefsson                 Expires May 15, 2011                  [Page 2]
+
+Internet-Draft              Syslog Media Type              November 2010
+
+
+1.  Introduction and Background
+
+   The syslog [RFC5424] protocol is used to convey event notification
+   messages across the network.  This document specify a stored format
+   for Syslog information.
+
+
+2.  Syslog Format
+
+
+3.  IANA Considerations
+
+   The registration template as documented in [RFC4288] follows:
+
+   Type name: application
+
+   Subtype name: syslog
+
+   Required parameters: n/a
+
+   Optional parameters: n/a
+
+   Encoding considerations: 8bit, to preserve UTF-8.
+
+   Security considerations:
+
+   Interoperability considerations:
+
+   Published specification: This document and [RFC5424].
+
+   Applications that use this media type:
+
+   Additional information:
+
+     Magic number(s):
+
+     File extension(s): .log
+
+     Macintosh file type code(s):
+
+   Person & email address to contact for further information:
+
+   Intended usage: COMMON
+
+   Restrictions on usage: None
+
+   Author:
+
+
+
+
+Josefsson                 Expires May 15, 2011                  [Page 3]
+
+Internet-Draft              Syslog Media Type              November 2010
+
+
+   Change controller:
+
+
+4.  Security Considerations
+
+   TBA.
+
+
+5.  Normative References
+
+   [RFC4288]  Freed, N. and J. Klensin, "Media Type Specifications and
+              Registration Procedures", BCP 13, RFC 4288, December 2005.
+
+   [RFC5424]  Gerhards, R., "The Syslog Protocol", RFC 5424, March 2009.
+
+
+Author's Address
+
+   Simon Josefsson
+   SJD AB
+   Hagagatan 24
+   Stockholm  113 47
+   Sweden
+
+   Email: simon@josefsson.org
+   URI:   http://josefsson.org/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Josefsson                 Expires May 15, 2011                  [Page 4]
+
