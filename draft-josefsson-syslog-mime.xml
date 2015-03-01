@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
-
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY rfc3156 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3156.xml'>
+<!ENTITY rfc3164 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3164.xml'>
 <!ENTITY rfc4288 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4288.xml'>
 <!ENTITY rfc5424 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5424.xml'>
+<!ENTITY rfc5751 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5751.xml'>
 ]>
 
 <?rfc compact="yes"?>
@@ -16,8 +17,23 @@
   <front>
 
     <title abbrev="Syslog Media Type">
-      The application/syslog Media Type for Syslog
+      The text/syslog Media Type for Syslog
     </title>
+
+    <author initials="R." surname="Gerhards" fullname="Rainer Gerhards">
+      <organization>
+	 Adiscon GmbH
+      </organization>
+      <address>
+       <postal>
+           <street>Mozartstr. 21</street>
+           <code>97950</code>
+           <city>Grossrinderfeld</city>
+           <country>Germany</country>
+       </postal>
+	<email>rgerhards@hq.adiscon.com</email>
+      </address>
+    </author>
 
     <author initials="S." surname="Josefsson" fullname="Simon Josefsson">
       <organization>
@@ -35,7 +51,7 @@
       </address>
     </author>
     
-    <date month="November" year="2010"/>
+    <date month="February" year="2015"/>
 
     <abstract>
 
@@ -51,13 +67,56 @@
 
     <section title="Introduction and Background">
 
-      <t>The <xref target="RFC5424">syslog</xref> protocol is used to
-      convey event notification messages across the network.  This
-      document specify a stored format for Syslog information.</t>
+	<t>
+		The <xref target="RFC5424">syslog</xref> protocol
+		specify the wire format of standardized syslog, but it
+		does not specify a format for stored data.  This
+		document describe how syslog messages are stored in
+		text files in a format that is close to the
+		on-the-wire format.
+	</t>
+	<t>
+		There are two main issues that this document
+		addresses: the important information on syslog
+		priority and facility is usually discarded in existing
+		implementations and there are no common rules for
+		control character escaping provided.  This document
+		offers guidelines for both.
+	</t>
+	<t>
+		The encoding outlined in this document can be used
+		both with legacy syslog as described in <xref
+		target="RFC3164" /> and standardized <xref
+		target="RFC5424"/> syslog.
+	</t>
 
     </section>
 
     <section title="Syslog Format">
+    <t>
+		The textual representation is on-the-wire format as
+		documented in <xref target="RFC5424" /> except for the
+		control character handling describe below.  The PRI
+		field MUST be included inside the textual
+		representation, as discussed in <xref target="RFC5424"
+		/>.  The ABNF rule for on-the-wire syslog messages is
+		SYSLOG-MSG.
+    </t>
+    <t>
+		Each syslog message MUST be delimited by a CRLF
+		trailer.
+    </t>
+    <t>
+		Control characters inside the textual representation
+		MUST be escaped. Characters %x00 to %x1F and %x7f MUST
+		be encoded as "#ooo" where "ooo" is the threee-digit
+		octal representation of the characters' numerical
+		code. The character "#" (%x23) MUST be encoded as
+		"##". Please note that this encoding is consistent
+		with what many implementations already use. We have
+		selected this encoding in the hope that it be the
+		least intrusive one.
+    </t>
 
     </section>
 
@@ -66,17 +125,24 @@
       <t>The registration template as documented in <xref
       target="RFC4288"/> follows:</t>
 
-      <t>Type name: application</t>
+      <t>Type name: text</t>
 
       <t>Subtype name: syslog</t>
 
-      <t>Required parameters: n/a</t>
+      <t>Required parameters: None</t>
 
-      <t>Optional parameters: n/a</t>
+      <t>Optional parameters: The "charset" parameter MAY be used as
+      discussed in <xref target="RFC4288"/>, and is normally
+      UTF-8.</t>
 
-      <t>Encoding considerations: 8bit, to preserve UTF-8.</t>
+      <t>Encoding considerations: 8bit, to preserve UTF-8 data.</t>
 
-      <t>Security considerations:</t>
+      <t>Security considerations: Syslog information may be security
+      relevant, and could warrant integrity and even confidentiality
+      protection.  Solutions to this problem is outside the scope of
+      this document, but we note the existence of <xref
+      target="RFC3156">PGP/MIME</xref> and <xref
+      target="RFC5751">S/MIME</xref>.</t>
 
       <t>Interoperability considerations:</t>
 
@@ -120,6 +186,12 @@
       &rfc4288;
       &rfc5424;
 
+    </references>
+
+    <references title="Informative References">
+      &rfc3156;
+      &rfc3164;
+      &rfc5751;
     </references>
 
   </back>
