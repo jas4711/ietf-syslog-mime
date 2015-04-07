@@ -51,13 +51,14 @@
       </address>
     </author>
     
-    <date month="February" year="2015"/>
+    <date month="April" year="2015"/>
 
     <abstract>
 
       <t>The syslog protocol is used to convey event notification
       messages across the network.  This document specify a stored
-      format for Syslog information.</t>
+      format for Syslog information. This is important to ensure
+      proper operation of the common log processing toolchain.</t>
 
     </abstract>
 
@@ -84,6 +85,22 @@
 		offers guidelines for both.
 	</t>
 	<t>
+		An important motivation for this document is the
+		emergency of multi-line syslog messages. Traditionally,
+		a syslog message fit into a single line. While 
+		<xref target="RFC5424"/> supports multi-line messages,
+		the usual text processing tool chain (tools like
+		grep, sed, tr, and many others) does not properly handle
+		multi-line log messages. This document specifies a format
+		that continues to work with the tool chain but also
+		permits to process multi-line log messages.
+	</t>
+	<t>
+		An important example for multi-line log messages are JAVA
+		stack traces and some forms of JSON-encoded messages in
+		widespread use.
+	</t>
+	<t>
 		The encoding outlined in this document can be used
 		both with legacy syslog as described in <xref
 		target="RFC3164" /> and standardized <xref
@@ -96,15 +113,23 @@
     <t>
 		The textual representation is on-the-wire format as
 		documented in <xref target="RFC5424" /> except for the
-		control character handling describe below.  The PRI
+		control character handling described below.  The PRI
 		field MUST be included inside the textual
 		representation, as discussed in <xref target="RFC5424"
 		/>.  The ABNF rule for on-the-wire syslog messages is
 		SYSLOG-MSG.
     </t>
     <t>
-		Each syslog message MUST be delimited by a CRLF
-		trailer.
+		Each syslog message MUST be delimited by the operating
+		system line delimiter. This usually is LF or CRLF. We do
+		not demand a specific line delimiter because that would
+		conflict with the goal of supporting operating system
+		text processing toolchains.
+    </t>
+    <t>
+    		[Alternatively, we may require [CR]/LF, this should be
+		good for the majority of cases and probably all where
+		the tool chain argument applies.]
     </t>
     <t>
 		Control characters inside the textual representation
@@ -116,6 +141,13 @@
 		with what many implementations already use. We have
 		selected this encoding in the hope that it be the
 		least intrusive one.
+    </t>
+    <t>
+    		[Alternatively, we may JSON control character encoding.
+		This has become very popular and possibly is a better choice.
+		Most importantly, it would facilitate text-tools to convert
+		log records into JSON -- e.g. to submit them to
+		ElasticSearch or other REST APIs.]
     </t>
 
     </section>
@@ -173,7 +205,12 @@
 
     <section title="Security Considerations">
 
-      <t>TBA.</t>
+      <t>Syslog information may be security
+      relevant, and could warrant integrity and even confidentiality
+      protection.  Solutions to this problem is outside the scope of
+      this document, but we note the existence of <xref
+      target="RFC3156">PGP/MIME</xref> and <xref
+      target="RFC5751">S/MIME</xref>.</t>
 
     </section>
 
